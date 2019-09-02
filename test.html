@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>카렛 테스트</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .editor {
+            width: 500px;
+            height: 300px;
+            border: 1px solid #ddd;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="editor" contenteditable="true">
+
+    </div>
+    <script>
+
+        document.querySelector(".editor").addEventListener("input", () => {
+            console.log("ad");
+            let node = document.querySelector(".editor");
+            let caretId = "_caret";
+            let cc = document.createElement("span");
+            cc.id = caretId;
+            window.getSelection().getRangeAt(0).insertNode(cc);
+
+            // node.blur();
+
+            // node.focus();
+
+            var range = document.createRange();
+            cc = document.getElementById(caretId);
+            range.selectNode(cc);
+            var selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            range.deleteContents();
+
+        });
+
+
+
+
+    </script>
+</body>
+
+</html>
