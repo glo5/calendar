@@ -1,52 +1,50 @@
 <template>
   <div id="app">
     <div class="logo">
-      <img src="./assets/imgs.jpg" alt width="100px" height="100px" />
-      <h2>Cherry Blossom Calendar</h2>
+      <img src="./assets/calendar.png" width="150px" height="150px">
+      <h2>Kanozo Calendar</h2>
     </div>
     <div class="button-row">
-      <button @click="prev"><</button>
+      <a href="#" @click="prev" class="prev-btn">Prev</a>
+
       <div class="month-label">{{current.getMonth() + 1}} 월</div>
-      <button @click="next">></button>
+
+      <a href="#" @click="next" class="next-btn">Next</a>
     </div>
-
-    <transition name="slide">
-      <div class="calendar">
-        <div class="box">
-          <div class="days">일</div>
-          <div class="days">월</div>
-          <div class="days">화</div>
-          <div class="days">수</div>
-          <div class="days">목</div>
-          <div class="days">금</div>
-          <div class="days">토</div>
-        </div>
-        <div v-for="week in dayList" class="week">
-          <day
-            v-for="day in week"
-            :day="day"
-            :key="day.idx"
-            @edit="openEditPopup"
-            @open="openPopupWindow(day.idx)"
-          >{{day}}</day>
-        </div>
+    <div class="calendar">
+      <div class="wrapper">
+        <div class="mon">일</div>
+        <div class="mon">월</div>
+        <div class="mon">화</div>
+        <div class="mon">수</div>
+        <div class="mon">목</div>
+        <div class="mon">금</div>
+        <div class="mon">토</div>
       </div>
-    </transition>
-
+      <div v-for="week in dayList" class="week">
+        <day
+          v-for="day in week"
+          :day="day"
+          :key="day.idx"
+          @edit="openEditPopup"
+          @open="openPopupWindow(day.idx)"
+        >{{day}}</day>
+      </div>
+    </div>
     <transition name="fade">
       <div id="popup" v-if="popupOpen">
         <div class="inner">
           <div class="form-group">
             <input v-model="todoTitle" type="text" placeholder="할 일을 입력하세요" />
             <textarea v-model="todoContent" placeholder="상세한 내용을 입력하세요"></textarea>
-            <div class="btn-group">
-              <button class="btn" type="button" @click="saveTodo">입력</button>
-              <button class="btn1" type="button" @click="popupOpen = false">닫기</button>
-            </div>
+          
+            <a href="#" @click="saveTodo" class="prev-btn">Input</a>
+            <a href="#" @click="popupOpen = false" class="next-btn">Close</a>
+            
           </div>
         </div>
       </div>
-    </transition>
+    <transition>
   </div>
 </template>
 
@@ -140,75 +138,115 @@ export default {
 </script>
 
 <style>
-@import url("https://fonts.googleapis.com/css?family=Anton|Lato|Sunflower:300&display=swap");
-body {
-  background-image: url(./assets/img.jpg);
-}
-
 .logo {
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  padding-top: 30px;
-  padding-bottom: 30px;
-}
-.box {
-  display: grid;
-  grid-gap: 10px;
-  margin-top: 10px;
-  grid-template-columns: repeat(7, 1fr);
-  grid-template-rows: minmax(40px, auto);
-  text-align: center;
-}
-.days{
-  width: 180.13px;
-  height: 40px;
-  background-color: #fab4eb;
-  border-radius: 10px;
-  margin-bottom: 10px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.month-label {
-  font-family: "Sunflower", sans-serif;
-}
-.logo > h2 {
-  font-family: "Lato", sans-serif;
 }
 .button-row {
-  width: 70%;
+  width: 1000px;
   margin: 0 auto;
   display: flex;
   justify-content: space-between;
 }
 
-.button-row button {
-  border: none;
-  background-color: rgb(216, 248, 186);
-  font-size: 20px;
-  cursor: pointer;
-  font-weight: bold;
-  color: rgb(80, 80, 80);
-  border-radius: 5px;
+.prev-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: #00aaff;
+  border: solid 2px #00aaff;
+  border-radius: 3px;
+  transition: 0.4s;
+}
+
+.prev-btn:hover {
+  background: #00aaff;
+  color: white;
+}
+
+.next-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.3em 1em;
+  text-decoration: none;
+  color: #ff4040;
+  border: 2px solid #ff4040;
+  border-radius: 3px;
+  transition: 0.4s;
+}
+
+.next-btn:hover {
+  background: #ff4040;
+  color: white;
 }
 
 .month-label {
   font-size: 25px;
 }
 .calendar {
-  width: 70%;
+  width: 100%;
+  height: 700px;
   margin: 0 auto;
   margin-top: 20px;
 }
-.week {
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.wrapper {
   display: grid;
-  grid-gap: 10px;
-  margin-bottom: 10px;
+  width: 1000px;
+  margin: 0 auto;
+  grid-template-columns: repeat(7, 1fr);
+  grid-template-rows: minmax(40px, auto);
+}
+
+.mon {
+  background-color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mon {
+  border-bottom: 1px solid #808080;
+}
+
+.mon:first-child {
+  color: red;
+}
+
+.mon:last-child {
+  color: blue;
+}
+
+.week {
+  width: 1000px;
+  display: grid;
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: minmax(120px, auto);
+  margin: 0 auto;
+  border-bottom: 1px solid #808080;
+}
+
+.day:first-child {
+  background-color: #d3d3d3;
+  color: red;
+}
+
+.day:last-child {
+  background-color: #d3d3d3;
+  color: blue;
 }
 
 #popup {
@@ -226,82 +264,23 @@ body {
 #popup > .inner {
   width: 400px;
   height: 300px;
-  background-image: url(./assets/back.jpg);
-  border-radius: 7px;
+  background-color: #fff;
+  border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 20px;
-  border: 3px solid pink;
 }
 
 #popup > .inner > .form-group {
   display: grid;
   grid-template-columns: 1fr;
   width: 80%;
-  height: 100%;
+  height: 80%;
   grid-gap: 10px;
-}
-
-#popup > .inner > .form-group input {
-  height: 25px;
-  padding: 1px 9px;
-  border-radius: 4px;
-  border: 2px solid pink;
-  font-size: 15px;
-}
-
-#popup > .inner > .form-group textarea {
-  border-radius: 4px;
-  border: 2px solid pink;
-  padding: 9px;
-  font-size: 15px;
 }
 
 .form-group > textarea {
   height: 150px;
 }
-
-#popup > .inner > .form-group .btn-group {
-  width: 100%;
-  justify-content: space-around;
-  display: flex;
-  height: 35px;
-}
-
-#popup > .inner > .form-group .btn-group button {
-  width: 70px;
-  border-radius: 5px;
-  color: #fff;
-  cursor: pointer;
-}
-
-#popup > .inner > .form-group .btn-group button:first-child {
-  background-color: #eb98d9;
-  border-color: #eb98d9;
-}
-
-#popup > .inner > .form-group .btn-group button:last-child {
-  background-color: #eb98d9;
-  border-color: #eb98d9;
-}
-
-#popup > .inner > .form-group .btn-group button:first-child:hover {
-  background-color: #fff;
-  border-color: #fff;
-  color: #000;
-}
-
-#popup > .inner > .form-group .btn-group button:last-child:hover {
-  background-color: #fff;
-  border-color: #fff;
-  color: #000;
-}
-
-.days:first-child{ 
-        color: red;
-    }
-    .days:last-child   {
-        color: blue;
-    }
 </style>

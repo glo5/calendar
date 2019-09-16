@@ -21,8 +21,8 @@ Vue.component('day', Day);
 new Vue({
   el: '#app',
   render: h => h(App),
-  methods:{
-    openAddTodo(){
+  methods: {
+    openAddTodo() {
       
     }
   }
